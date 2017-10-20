@@ -22,10 +22,11 @@ int staTop1 = LOW;
 #define ledTop2 D5 // Led digital 5
 int staTop2 = LOW;
 
-#define ONE_WIRE_BUS D1
+#define SENSORTEMPTOP1 D1
+#define TOPICOTEM1 "/quarto/temperatura/temperatura1"
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
-OneWire oneWire(ONE_WIRE_BUS);
+OneWire oneWire(SENSORTEMPTOP1);
 
 // Pass our oneWire reference to Dallas Temperature. 
 DallasTemperature sensors(&oneWire);
