@@ -1,9 +1,12 @@
 #include <ESP8266WiFi.h>  //essa biblioteca já vem com a IDE. Portanto, não é preciso baixar nenhuma biblioteca adicional
 #include <PubSubClient.h> //Importa biblioteca MQTT
 
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
-#define SSID_REDE     ""  //coloque aqui o nome da rede que se deseja conectar
-#define SENHA_REDE    ""  //coloque aqui a senha da rede que se deseja conectar
+
+#define SSID_REDE     "NEOQEAVDLV"  //coloque aqui o nome da rede que se deseja conectar
+#define SENHA_REDE    "()casa2014"  //coloque aqui a senha da rede que se deseja conectar
 
 #define ID_MQTT "quarto"
 #define MQTT_SERVER "iot2017.nc2.iff.edu.br"
@@ -19,7 +22,16 @@ int staTop1 = LOW;
 #define ledTop2 D5 // Led digital 5
 int staTop2 = LOW;
 
+#define ONE_WIRE_BUS D1
 
+// Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
+OneWire oneWire(ONE_WIRE_BUS);
+
+// Pass our oneWire reference to Dallas Temperature. 
+DallasTemperature sensors(&oneWire);
+
+// arrays to hold device address
+DeviceAddress insideThermometer;
 
 
 WiFiClient cliente;
