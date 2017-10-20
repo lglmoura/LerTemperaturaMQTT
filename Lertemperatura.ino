@@ -38,7 +38,41 @@ DeviceAddress insideThermometer;
 WiFiClient cliente;
 PubSubClient clienteMQTT(cliente);
 
+// function to print a device address
+void printAddress(DeviceAddress deviceAddress)
+{
+  for (uint8_t i = 0; i < 8; i++)
+  {
+    if (deviceAddress[i] < 16) Serial.print("0");
+    Serial.print(deviceAddress[i], HEX);
+  }
+}
 
+boolean conectaSensorTemperatura(void){
+  Serial.println("Dallas Temperature IC Control Library Demo");
+
+  // locate devices on the bus
+  Serial.print("Locating devices...");
+  sensors.begin();
+  Serial.print("Found ");
+  Serial.print(sensors.getDeviceCount(), DEC);
+  Serial.println(" devices.");
+
+  if (!sensors.getAddress(insideThermometer, 0)){ 
+       Serial.println("Unable to find address for Device 0");
+       return false; 
+  }
+  Serial.println("Unable to find address for insideThermometer");
+
+  // show the addresses we found on the bus
+  Serial.print("Device  Address: ");
+  printAddress(insideThermometer);
+  Serial.println();
+
+  // set the resolution to 9 bit (Each Dallas/Maxim device is capable of several different resolutions)
+  sensors.setResolution(insideThermometer, 9);
+  return true; 
+}
 
 //Função: faz a conexão WiFI
 //Parâmetros: nenhum
@@ -193,7 +227,9 @@ void setup() {
   iniciaGPIO();
   if (conectaWiFi()){
      iniciaMQTT();
+     conectaSensorTemperatura();
   }
+  
   
 }
 
