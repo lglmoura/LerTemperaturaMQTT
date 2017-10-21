@@ -34,6 +34,8 @@ DallasTemperature sensors(&oneWire);
 // arrays to hold device address
 DeviceAddress insideThermometer;
 
+unsigned long readTime;
+
 
 WiFiClient cliente;
 PubSubClient clienteMQTT(cliente);
@@ -95,7 +97,7 @@ boolean conectaWiFi(void)
 {
     
     cliente.stop();
-    
+        
     delay(500);
     Serial.println("Conectando-se à rede WiFi...");
     Serial.println();  
@@ -238,6 +240,7 @@ void iniciaGPIO(void){
 void setup() {
   Serial.begin(115200);
   delay(10);
+  readTime = 0;
   iniciaGPIO();
   if (conectaWiFi()){
      iniciaMQTT();
@@ -252,11 +255,17 @@ void loop() {
       if (!clienteMQTT.connected()) {
         connectaClienteMQTT();
       }
-      sensors.requestTemperatures();
-      printTemperature(insideThermometer);
+      if(millis() > readTime+6000){
+          readTime = millis();
+          sensors.requestTemperatures();
+          printTemperature(insideThermometer);
+      }
       clienteMQTT.loop(); 
   }else{
-    conectaWiFi();   
+   if (conectaWiFi()){
+     iniciaMQTT();
+     conectaSensorTemperatura();
+   }   
       
   }
 
