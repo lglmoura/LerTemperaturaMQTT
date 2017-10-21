@@ -48,6 +48,20 @@ void printAddress(DeviceAddress deviceAddress)
   }
 }
 
+// function to print the temperature for a device
+void printTemperature(DeviceAddress deviceAddress)
+{
+  
+  float tempC = sensors.getTempC(deviceAddress);
+  Serial.print("Temp C: ");
+  Serial.print(tempC);
+  Serial.print(" Temp F: ");
+  Serial.println(DallasTemperature::toFahrenheit(tempC)); // Converts tempC to Fahrenheit
+  //char str[4]=""
+  //sprintf(str, "%f", tempC);
+  clienteMQTT.publish(TOPICOTEM1, String(tempC).c_str());
+}
+
 boolean conectaSensorTemperatura(void){
   Serial.println("Dallas Temperature IC Control Library Demo");
 
@@ -89,7 +103,7 @@ boolean conectaWiFi(void)
     WiFi.begin(SSID_REDE, SENHA_REDE);
     
     int contDelay = 0;
-    while ((WiFi.status() != WL_CONNECTED) && (contDelay < 60) ) 
+    while ((WiFi.status() != WL_CONNECTED) && (contDelay < 20) ) 
     {
         delay(500);
         Serial.print(".");
@@ -238,7 +252,8 @@ void loop() {
       if (!clienteMQTT.connected()) {
         connectaClienteMQTT();
       }
-     
+      sensors.requestTemperatures();
+      printTemperature(insideThermometer);
       clienteMQTT.loop(); 
   }else{
     conectaWiFi();   
