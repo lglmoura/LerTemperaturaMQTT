@@ -5,8 +5,8 @@
 #include <DallasTemperature.h>
 
 
-#define SSID_REDE     "NEOQEAVDLV"  //coloque aqui o nome da rede que se deseja conectar
-#define SENHA_REDE    "()casa2014"  //coloque aqui a senha da rede que se deseja conectar
+#define SSID_REDE     "saeg"  //coloque aqui o nome da rede que se deseja conectar
+#define SENHA_REDE    "semsenha"  //coloque aqui a senha da rede que se deseja conectar
 
 #define ID_MQTT "quarto"
 #define MQTT_SERVER "iot2017.nc2.iff.edu.br"
