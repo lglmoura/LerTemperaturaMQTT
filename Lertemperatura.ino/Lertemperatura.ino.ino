@@ -59,8 +59,7 @@ void printTemperature(DeviceAddress deviceAddress)
   Serial.print(tempC);
   Serial.print(" Temp F: ");
   Serial.println(DallasTemperature::toFahrenheit(tempC)); // Converts tempC to Fahrenheit
-  //char str[4]=""
-  //sprintf(str, "%f", tempC);
+  
   clienteMQTT.publish(TOPICOTEM1, String(tempC).c_str());
 }
 
