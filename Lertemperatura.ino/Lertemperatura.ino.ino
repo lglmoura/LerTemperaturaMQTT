@@ -8,7 +8,7 @@
 #define SSID_REDE     "saeg"  //coloque aqui o nome da rede que se deseja conectar
 #define SENHA_REDE    "semsenha"  //coloque aqui a senha da rede que se deseja conectar
 
-#define ID_MQTT "quarto"
+#define ID_MQTT "quartoprofessor"
 #define MQTT_SERVER "iot2017.nc2.iff.edu.br"
 #define MQTT_USER   "saeg2017"
 #define MQTT_PASS   "semsenha"
